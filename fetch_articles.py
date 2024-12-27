@@ -2,15 +2,20 @@ import os
 import json
 import gspread
 from google.oauth2.service_account import Credentials
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Hardcoded variables
 SPREADSHEET_ID = '1z0tPzic-a_hPtadZufK2ndEbij7NYP7m8EmZQwXGld4'
 RANGE_NAME = 'All Prompts'
+CREDENTIALS_FILE = os.getenv("GOOGLE_CREDENTIALS_FILE")
 
 def fetch_articles(spreadsheet_id, range_name):
     # Set up the Sheets API
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = Credentials.from_service_account_file('/Users/sergiusnyah/FF/fatima-443315-f2d3d80462bc.json', scopes=scope)
+    creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scope)
     client = gspread.authorize(creds)
 
     # Fetch the data
